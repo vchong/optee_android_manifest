@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <remote name="github" fetch="https://github.com/" />
+  <remote name="vclin" fetch="https://git.linaro.org/people/victor.chong" />
+  <remote name="vc" fetch="https://github.com/vchong" />
+
+  <remove-project name="device/generic/trusty" />
+  <project path="device/generic/trusty" name="device-generic-trusty" revision="tt" remote="vc" groups="pdk" />
+
+  <remove-project name="platform/system/core" />
+  <project path="system/core" name="platform/system/core" revision="tt" remote="vclin" groups="pdk" />
+
+  <project path="external/optee_test" name="optee_test" revision="tt" remote="vc" groups="trusty" />
+  <project path="external/optee_client" name="optee_client" revision="plugin2" remote="vc" groups="trusty" />
+
+  <project path="external/optee_examples" name="linaro-swg/optee_examples" revision="master" remote="github" groups="trusty" />
+  <project path="device/linaro/kmgk" name="linaro-swg/kmgk" revision="master" remote="github" groups="trusty" />
+
+  <!--
+  <remove-project name="local" />
+  <project path="local" name="remote" revision="branch" remote="github" groups="trusty" />
+  -->
+
+</manifest>
