@@ -35,16 +35,9 @@ Below repos are replaced with those from https://github.com/vchong
 using local manifest below.
 
 ```
-# project build/	branch tt
-# project optee_os/	branch kmgk_rebase_mbedtls_pie_20210421
-# project qemu/		branch tt
+# project build/	branch tt2
+# project optee_os/	branch kmgk_rebase_mbedtls_20210712
 ```
-
-`qemu.git` branch `tt` tries to cherry pick non-upstream patches from
-https://android.googlesource.com/trusty/external/qemu `master` branch
-but `7ed6ed9 Remove capstone, dtc and ui/keycodemapdb submodules`
-can't be used since it's too old (v3) to build on `build.git`'s qemu v6
-so without it, not sure if the other patches are even necessary?
 
 Changes in `optee_os` are to include AOSP related patches.
 
@@ -95,13 +88,15 @@ OP-TEE ones become default.
 Changes in `device/generic/trusty` are to integrate OP-TEE components
 into the build and disable unrequired trusty services.
 
-The local manifest also adds OP-TEE repos to the source tree.
+The local manifest also adds OP-TEE repos to the source tree:
+- kmgk
+- optee_examples
+- optee_client
+- optee_test
 
-`optee_test` is from https://github.com/vchong/optee_test branch `tt`
+`optee_test` is from https://github.com/vchong/optee_test branch `tt2`
 due to disablement of TA build and redefinition of `TA_DEV_KIT_DIR`.
-
-`optee_client` is from https://github.com/vchong/optee_client branch
-`plugin2` for plugin support.
+The other repos are just `master` branches.
 
 ```
 mkdir -p ${GROOT}/optee/.repo/local_manifests
@@ -149,7 +144,7 @@ Below repos are replaced with those from https://github.com/vchong
 using local manifest below.
 
 ```
-# project external/linux/                         branch tt
+# project external/linux/                         branch tt2
 # project trusty/device/arm/generic-arm64/        branch tt
 ```
 
@@ -192,11 +187,13 @@ Run `xtest` from the console or `adb` shell.
 **NOTE: NOT** all tests pass at the moment!
 
 ```
-2333 subtests of which 1 failed
-19 test cases of which 1 failed
-91 test cases were skipped
+pkcs11_1014.1 FAILED first error at external/optee_test/host/xtest/pkcs11_1000.c:3345
++-----------------------------------------------------
+28707 subtests of which 1 failed
+113 test cases of which 1 failed
+0 test cases were skipped
 
-# As of 20210525
+# As of 20210715
 ```
 
 To stop the run, issue below command from another terminal:
