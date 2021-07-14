@@ -5,7 +5,7 @@
   <remote name="vc" fetch="https://github.com/vchong" />
 
   <remove-project name="kernel/common" />
-  <project path="external/linux" name="linux" revision="tt" remote="vc" groups="trusty" />
+  <project path="external/linux" name="linux" revision="tt2" remote="vc" groups="trusty" />
 
   <remove-project name="trusty/device/arm/generic-arm64" />
   <project path="trusty/device/arm/generic-arm64" name="device-arm-generic-arm64" revision="tt" remote="vc" groups="trusty" />

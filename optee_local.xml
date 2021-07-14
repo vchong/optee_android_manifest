@@ -5,15 +5,17 @@
   <remote name="lswg" fetch="https://github.com/linaro-swg" />
 
   <remove-project name="OP-TEE/build.git" />
-  <project path="build" name="build" revision="tt" remote="vc">
+  <project path="build" name="build" revision="tt2" remote="vc">
 	  <linkfile src="qemu_v8.mk" dest="build/Makefile" />
   </project>
 
+  <!--
   <remove-project name="qemu/qemu.git" />
   <project path="qemu" name="qemu" revision="tt" remote="vc" />
+  -->
 
   <remove-project name="OP-TEE/optee_os.git" />
-  <project path="optee_os" name="optee_os" revision="kmgk_rebase_mbedtls_pie_20210421" remote="vc" />
+  <project path="optee_os" name="optee_os" revision="kmgk_rebase_mbedtls_20210712" remote="vc" />
 
   <project path="kmgk" name="kmgk" revision="master" remote="lswg" />
 
