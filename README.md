@@ -35,8 +35,8 @@ Below repos are replaced with those from https://github.com/vchong
 using local manifest below.
 
 ```
-# project build/	branch tt2
-# project optee_os/	branch kmgk_rebase_mbedtls_20210712
+# project build/	branch tt3
+# project optee_os/	branch kmgk_rebase_mbedtls_20211008
 ```
 
 Changes in `optee_os` are to include AOSP related patches.
@@ -58,10 +58,10 @@ cd build
 make toolchains
 
 # SDP not supported in kernel 5.10 and above so set CFG_SECURE_DATA_PATH=n
+# Disable ASLR for GDB
 # PKCS11 not built by default so set CFG_PKCS11_TA=y to build it
 # set CFG_USER_TA_TARGETS=ta_arm64 to build TAs as 64b
-# make -j36 CFG_SECURE_DATA_PATH=n CFG_PKCS11_TA=y CFG_USER_TA_TARGETS=ta_arm64 CFG_TEE_TA_LOG_LEVEL=2
-./build.sh
+${GROOT}/optee/build.sh
 ```
 
 ## 2. Build qemu trusty arm64 AOSP userspace
@@ -94,7 +94,7 @@ The local manifest also adds OP-TEE repos to the source tree:
 - optee_client
 - optee_test
 
-`optee_test` is from https://github.com/vchong/optee_test branch `tt2`
+`optee_test` is from https://github.com/vchong/optee_test branch `tt3`
 due to disablement of TA build and redefinition of `TA_DEV_KIT_DIR`.
 The other repos are just `master` branches.
 
@@ -107,15 +107,17 @@ cd ${GROOT}/aosp
 repo sync -j8
 ```
 
-Copy TAs from `build.git` to AOSP userspace
-
 ```
+# 2a. Copy TAs from `build.git` to AOSP userspace
 mkdir -p ${GROOT}/aosp/out/target/product/trusty/vendor/lib
 
 # If a previous copy exists, delete it first
 rm -rf ${GROOT}/aosp/out/target/product/trusty/vendor/lib/optee_armtz
 
 cp -a ${GROOT}/optee/out-br/target/lib/optee_armtz ${GROOT}/aosp/out/target/product/trusty/vendor/lib/
+
+# 2b. Or just run the below script to copy the TAs
+${GROOT}/optee/cp_ta.sh
 ```
 
 Build AOSP userspace
@@ -144,11 +146,11 @@ Below repos are replaced with those from https://github.com/vchong
 using local manifest below.
 
 ```
-# project external/linux/                         branch tt2
-# project trusty/device/arm/generic-arm64/        branch tt
+# project external/linux/                         branch tt3
+# project trusty/device/arm/generic-arm64/        branch tt2
 ```
 
-Changes in `external/linux` are to add OP-TEE CONFIGs.
+Changes in `external/linux` are to add OP-TEE patches.
 
 Changes in `trusty/device/arm/generic-arm64` are to:
 - fix a build error
@@ -165,7 +167,7 @@ wget https://raw.githubusercontent.com/vchong/optee_android_manifest/qemu-optee-
 cd ${GROOT}/trusty
 
 repo sync -j32
-./trusty/vendor/google/aosp/scripts/build.py qemu-generic-arm64
+${GROOT}/trusty/vendor/google/aosp/scripts/build.py qemu-generic-arm64
 ```
 
 Copy `RPMB_DATA` and `firmware.android.dts` to `build.git`.
@@ -179,27 +181,34 @@ cp ${GROOT}/trusty/build-root/build-qemu-generic-arm64/atf/qemu/debug/firmware.a
 
 ```
 cd ${GROOT}/optee/build
-make run-only
+make run-aosp
 ```
 
-Run `xtest` from the console or `adb` shell.
+Press `c` at the `(qemu)` prompt to continue.
+```
+(qemu) c
+```
+
+At the Normal World console or `adb` shell:
+
+Run `su` to become root.
+
+Run `xtest` to execute the test suite.
 
 **NOTE: NOT** all tests pass at the moment!
 
 ```
-pkcs11_1014.1 FAILED first error at external/optee_test/host/xtest/pkcs11_1000.c:3345
+pkcs11_1014.1 FAILED first error at external/optee_test/host/xtest/pkcs11_1000.c:3519
 +-----------------------------------------------------
 28707 subtests of which 1 failed
 113 test cases of which 1 failed
 0 test cases were skipped
 
-# As of 20210715
+# As of 20211008
 ```
 
-To stop the run, issue below command from another terminal:
-
+Press `q` at the `(qemu)` prompt to quit.
 ```
-${GROOT}/trusty/build-root/build-qemu-generic-arm64/stop
-
+(qemu) q
 ```
 
