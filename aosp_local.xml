@@ -8,7 +8,7 @@
   <project path="device/generic/trusty" name="device-generic-trusty" revision="tt" remote="vc" groups="pdk" />
 
   <remove-project name="platform/packages/modules/NeuralNetworks" />
-  <project path="packages/modules/NeuralNetworks" name="platform/packages/modules/NeuralNetworks" revision="tt_android-s-beta-2" remote="vc" groups="pdk" />
+  <project path="packages/modules/NeuralNetworks" name="packages-modules-NeuralNetworks" revision="tt_android-s-beta-2" remote="vc" groups="pdk" />
 
   <remove-project name="platform/system/core" />
   <project path="system/core" name="platform/system/core" revision="tt_android-s-beta-2" remote="vclin" groups="pdk" />
