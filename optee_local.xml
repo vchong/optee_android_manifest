@@ -15,9 +15,9 @@
   -->
 
   <remove-project name="OP-TEE/optee_os.git" />
-  <project path="optee_os" name="optee_os" revision="kmgk_rebase_mbedtls_20211008" remote="vc" />
+  <project path="optee_os" name="optee_os" revision="kmgk_rebase_mbedtls_20211020" remote="vc" />
 
-  <project path="kmgk" name="kmgk" revision="master" remote="lswg" />
+  <project path="kmgk" name="kmgk" revision="refs/tags/3.15.0" remote="lswg" />
 
   <!--
   <remove-project name="local" />

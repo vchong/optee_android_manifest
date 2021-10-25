@@ -26,7 +26,7 @@ export GROOT=$(pwd)
 ```
 mkdir -p ${GROOT}/optee
 cd ${GROOT}/optee
-repo init -u https://github.com/OP-TEE/manifest.git -m qemu_v8.xml
+repo init -u https://github.com/OP-TEE/manifest.git -m qemu_v8.xml -b 3.15.0
 ```
 
 Below repos are replaced with those from https://github.com/vchong
@@ -34,7 +34,7 @@ using local manifest below.
 
 ```
 # project build/	branch tt3
-# project optee_os/	branch kmgk_rebase_mbedtls_20211008
+# project optee_os/	branch kmgk_rebase_mbedtls_20211020
 ```
 
 Changes in `optee_os` are to include AOSP related patches.
@@ -48,7 +48,7 @@ The local manifest also adds the `kmgk` repo to the source tree.
 ```
 mkdir -p ${GROOT}/optee/.repo/local_manifests
 cd ${GROOT}/optee/.repo/local_manifests
-wget https://raw.githubusercontent.com/vchong/optee_android_manifest/qemu-optee-arm64/optee_local.xml
+wget https://raw.githubusercontent.com/vchong/optee_android_manifest/3.15.0/optee_local.xml
 
 cd ${GROOT}/optee
 repo sync
@@ -69,7 +69,7 @@ This is where you can customize your OP-TEE AOSP userspace.
 ```
 mkdir -p ${GROOT}/aosp
 cd ${GROOT}/aosp
-repo init -u https://android.googlesource.com/platform/manifest -b master
+repo init -u https://android.googlesource.com/platform/manifest -b android-s-beta-2
 ```
 
 Below repos are replaced with those from https://github.com/vchong
@@ -77,14 +77,20 @@ using local manifest below.
 
 ```
 # project device/generic/trusty/                  branch tt
-# project system/core/                            branch tt
+# project system/core/                            branch tt_android-s-beta-2
+# project frameworks/base                         branch tt_android-s-beta-2
+# project packages/modules/NeuralNetworks         branch tt_android-s-beta-2
 ```
+
+Changes in `packages/modules/NeuralNetworks` and `frameworks/base` are to fix
+build errors.
 
 Changes in `system/core` are to remove trusty kmgk modules so that the
 OP-TEE ones become default.
 
 Changes in `device/generic/trusty` are to integrate OP-TEE components
-into the build and disable unrequired trusty services.
+into the build, disable unrequired trusty services and cherry-pick upstream
+fixes for the qemu_trusty_arm64 build.
 
 The local manifest also adds OP-TEE repos to the source tree:
 - kmgk
@@ -94,12 +100,12 @@ The local manifest also adds OP-TEE repos to the source tree:
 
 `optee_test` is from https://github.com/vchong/optee_test branch `tt3`
 due to disablement of TA build and redefinition of `TA_DEV_KIT_DIR`.
-The other repos are just `master` branches.
+The other repos are just the current release tag.
 
 ```
 mkdir -p ${GROOT}/optee/.repo/local_manifests
 cd ${GROOT}/optee/.repo/local_manifests
-wget https://raw.githubusercontent.com/vchong/optee_android_manifest/qemu-optee-arm64/aosp_local.xml
+wget https://raw.githubusercontent.com/vchong/optee_android_manifest/3.15.0/aosp_local.xml
 
 cd ${GROOT}/aosp
 repo sync -j8
@@ -138,6 +144,9 @@ optee, etc.
 mkdir -p ${GROOT}/trusty
 cd ${GROOT}/trusty
 repo init -u https://android.googlesource.com/trusty/manifest -b master
+cd ${GROOT}/trusty/.repo/manifests
+# Have to check out a sha since manifest is not tagged!
+git checkout 9bef347fc0a94ec496bfb8681c8c94839f8b860b
 ```
 
 Below repos are replaced with those from https://github.com/vchong
@@ -145,7 +154,7 @@ using local manifest below.
 
 ```
 # project external/linux/                         branch tt3
-# project trusty/device/arm/generic-arm64/        branch tt2
+# project trusty/device/arm/generic-arm64/        branch tt3
 ```
 
 Changes in `external/linux` are to add OP-TEE patches.
@@ -161,11 +170,11 @@ Changes in `trusty/device/arm/generic-arm64` are to:
 ```
 mkdir -p ${GROOT}/trusty/.repo/local_manifests
 cd ${GROOT}/trusty/.repo/local_manifests
-wget https://raw.githubusercontent.com/vchong/optee_android_manifest/qemu-optee-arm64/trusty_local.xml
+wget https://raw.githubusercontent.com/vchong/optee_android_manifest/3.15.0/trusty_local.xml
 cd ${GROOT}/trusty
 
 repo sync -j32
-${GROOT}/trusty/vendor/google/aosp/scripts/build.py qemu-generic-arm64
+${GROOT}/trusty/trusty/vendor/google/aosp/scripts/build.py qemu-generic-arm64
 ```
 
 Copy `RPMB_DATA` and `firmware.android.dts` to `build.git`.
