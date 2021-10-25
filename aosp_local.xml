@@ -10,7 +10,7 @@
   <remove-project name="platform/system/core" />
   <project path="system/core" name="platform/system/core" revision="tt" remote="vclin" groups="pdk" />
 
-  <project path="external/optee_test" name="optee_test" revision="tt2" remote="vc" groups="trusty" />
+  <project path="external/optee_test" name="optee_test" revision="tt3" remote="vc" groups="trusty" />
   <project path="external/optee_client" name="OP-TEE/optee_client" revision="master" remote="github" groups="trusty" />
 
   <project path="external/optee_examples" name="linaro-swg/optee_examples" revision="master" remote="github" groups="trusty" />
