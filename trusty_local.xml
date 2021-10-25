@@ -8,7 +8,7 @@
   <project path="external/linux" name="linux" revision="tt3" remote="vc" groups="trusty" />
 
   <remove-project name="trusty/device/arm/generic-arm64" />
-  <project path="trusty/device/arm/generic-arm64" name="device-arm-generic-arm64" revision="tt2" remote="vc" groups="trusty" />
+  <project path="trusty/device/arm/generic-arm64" name="device-arm-generic-arm64" revision="tt3" remote="vc" groups="trusty" />
 
   <!--
   <remove-project name="local" />

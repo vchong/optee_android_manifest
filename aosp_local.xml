@@ -7,14 +7,20 @@
   <remove-project name="device/generic/trusty" />
   <project path="device/generic/trusty" name="device-generic-trusty" revision="tt" remote="vc" groups="pdk" />
 
+  <remove-project name="platform/packages/modules/NeuralNetworks" />
+  <project path="packages/modules/NeuralNetworks" name="platform/packages/modules/NeuralNetworks" revision="tt_android-s-beta-2" remote="vc" groups="pdk" />
+
   <remove-project name="platform/system/core" />
-  <project path="system/core" name="platform/system/core" revision="tt" remote="vclin" groups="pdk" />
+  <project path="system/core" name="platform/system/core" revision="tt_android-s-beta-2" remote="vclin" groups="pdk" />
+
+  <remove-project name="platform/frameworks/base" />
+  <project path="frameworks/base" name="platform/frameworks/base" revision="tt_android-s-beta-2" remote="vclin" groups="pdk" />
 
   <project path="external/optee_test" name="optee_test" revision="tt3" remote="vc" groups="trusty" />
-  <project path="external/optee_client" name="OP-TEE/optee_client" revision="master" remote="github" groups="trusty" />
+  <project path="external/optee_client" name="OP-TEE/optee_client" revision="refs/tags/3.15.0" remote="github" groups="trusty" />
 
-  <project path="external/optee_examples" name="linaro-swg/optee_examples" revision="master" remote="github" groups="trusty" />
-  <project path="device/linaro/kmgk" name="linaro-swg/kmgk" revision="master" remote="github" groups="trusty" />
+  <project path="external/optee_examples" name="linaro-swg/optee_examples" revision="refs/tags/3.15.0" remote="github" groups="trusty" />
+  <project path="device/linaro/kmgk" name="linaro-swg/kmgk" revision="refs/tags/3.15.0" remote="github" groups="trusty" />
 
   <!--
   <remove-project name="local" />
