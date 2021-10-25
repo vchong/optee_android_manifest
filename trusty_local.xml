@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <remote name="github" fetch="https://github.com/" />
+  <remote name="vclin" fetch="https://git.linaro.org/people/victor.chong" />
+  <remote name="vc" fetch="https://github.com/vchong" />
+
+  <remove-project name="kernel/common" />
+  <project path="external/linux" name="linux" revision="tt" remote="vc" groups="trusty" />
+
+  <remove-project name="trusty/device/arm/generic-arm64" />
+  <project path="trusty/device/arm/generic-arm64" name="device-arm-generic-arm64" revision="tt" remote="vc" groups="trusty" />
+
+  <!--
+  <remove-project name="local" />
+  <project path="local" name="remote" revision="branch" remote="github" groups="trusty" />
+  -->
+
+</manifest>
