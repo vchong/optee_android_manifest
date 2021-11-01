@@ -50,7 +50,7 @@ The local manifest also adds the `kmgk` repo to the source tree.
 ```
 mkdir -p ${GROOT}/optee/.repo/local_manifests
 cd ${GROOT}/optee/.repo/local_manifests
-wget https://raw.githubusercontent.com/vchong/optee_android_manifest/3.15.0/optee_local.xml
+wget https://raw.githubusercontent.com/vchong/optee_android_manifest/3.15.1/optee_local.xml
 
 cd ${GROOT}/optee
 repo sync
@@ -61,7 +61,7 @@ make toolchains
 # Disable ASLR for GDB
 # PKCS11 not built by default so set CFG_PKCS11_TA=y to build it
 # set CFG_USER_TA_TARGETS=ta_arm64 to build TAs as 64b
-${GROOT}/optee/build.sh
+./build.sh
 ```
 
 ## 2. Build qemu trusty arm64 AOSP userspace
@@ -105,12 +105,12 @@ due to disablement of TA build and redefinition of `TA_DEV_KIT_DIR`.
 The other repos are just the current release tag.
 
 ```
-mkdir -p ${GROOT}/optee/.repo/local_manifests
-cd ${GROOT}/optee/.repo/local_manifests
-wget https://raw.githubusercontent.com/vchong/optee_android_manifest/3.15.0/aosp_local.xml
+mkdir -p ${GROOT}/aosp/.repo/local_manifests
+cd ${GROOT}/aosp/.repo/local_manifests
+wget https://raw.githubusercontent.com/vchong/optee_android_manifest/3.15.1/aosp_local.xml
 
 cd ${GROOT}/aosp
-repo sync -j8
+repo sync -j18
 ```
 
 ```
@@ -131,7 +131,7 @@ Build AOSP userspace
 ```
 . ./build/envsetup.sh
 lunch qemu_trusty_arm64-userdebug
-make -j24
+make -j18
 ```
 
 ## 3. Build qemu trusty bootloader components
@@ -147,12 +147,10 @@ mkdir -p ${GROOT}/trusty
 cd ${GROOT}/trusty
 repo init -u https://android.googlesource.com/trusty/manifest -b master
 cd ${GROOT}/trusty/.repo/manifests
-# Have to check out a sha since manifest is not tagged!
-git checkout 9bef347fc0a94ec496bfb8681c8c94839f8b860b
 ```
 
 Below repos are replaced with those from https://github.com/vchong
-using local manifest below.
+using pinned manifest below since the trusty manifest is not tagged.
 
 ```
 # project external/linux/                         branch tt3
@@ -170,12 +168,9 @@ Changes in `trusty/device/arm/generic-arm64` are to:
   for AOSP debugging
 
 ```
-mkdir -p ${GROOT}/trusty/.repo/local_manifests
-cd ${GROOT}/trusty/.repo/local_manifests
-wget https://raw.githubusercontent.com/vchong/optee_android_manifest/3.15.0/trusty_local.xml
-cd ${GROOT}/trusty
+wget https://raw.githubusercontent.com/vchong/optee_android_manifest/3.15.1/trusty-pinned-manifest_optee-3.15.0_20211101-0838.xml
 
-repo sync -j32
+repo sync -j18 -m trusty-pinned-manifest_optee-3.15.0_20211101-0838.xml
 ${GROOT}/trusty/trusty/vendor/google/aosp/scripts/build.py qemu-generic-arm64
 ```
 
